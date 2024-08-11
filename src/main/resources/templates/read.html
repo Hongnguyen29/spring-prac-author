@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Read Author</title>
+    <style>
+      /* Toàn bộ CSS được viết ở đây */
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+      header {
+        background: #f4f4f4;
+        padding: 10px;
+        text-align: center;
+      }
+      nav {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        text-align: center;
+      }
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        margin: 0 10px;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+      main {
+        padding: 20px;
+      }
+      form div {
+        margin-bottom: 10px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      input[type="text"],
+      input[type="number"] {
+        padding: 8px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      input[type="submit"] {
+        background: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background: #555;
+      }
+      p {
+        margin: 10px 0;
+      }
+      hr {
+        margin: 20px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h2>[[${author.id}]]. [[${author.name}]]</h2>
+      <h4>Debut Year: [[${author.debutYear}]]</h4>
+      <hr />
+    </header>
+
+    <nav>
+      <a href="/authors/home">Back Home</a>
+      <a th:href="@{/authors/{id}/update (id=${author.id})}">Update</a>
+      <a th:href="@{/authors/{id}/delete (id=${author.id})}">Delete</a>
+    </nav>
+
+    <main>
+      <h3>Books:</h3>
+      <div th:if="${author.books.isEmpty()}">
+        <p>No books</p>
+      </div>
+
+      <div
+        th:unless="${author.books.isEmpty()}"
+        th:each="book : ${author.books}"
+      >
+        <p><strong>Title:</strong> [[${book.title}]]</p>
+        <p><strong>Summary:</strong> [[${book.summary}]]</p>
+        <p><strong>Rating:</strong> [[${book.rating}]]</p>
+        <a th:href="@{/authors/{id}/books/{bId}/delete (id=${author.id},bId=${book.id})}">Delete</a>
+        <hr />
+      </div>
+
+      <form
+        th:action="@{/authors/{id}/books/create (id=${author.id})}"
+        method="post"
+      >
+        <div>
+          <label for="title-input">Title:</label>
+          <input type="text" id="title-input" name="title" />
+        </div>
+        <div>
+          <label for="summary-input">Summary:</label>
+          <input type="text" id="summary-input" name="summary" />
+        </div>
+        <div>
+          <label for="rating-input">Rating:</label>
+          <input type="number" id="rating-input" name="rating" />
+        </div>
+        <div>
+          <input type="submit" value="Add Book" />
+        </div>
+      </form>
+    </main>
+  </body>
+</html>

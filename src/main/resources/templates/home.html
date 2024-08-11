@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Authors</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        h1 {
+          color: #333;
+          margin-top: 20px;
+        }
+        .author-list {
+          width: 80%;
+          max-width: 800px;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          margin: 20px 0;
+        }
+        .author-item {
+          border-bottom: 1px solid #ddd;
+          padding: 10px 0;
+        }
+        .author-item:last-child {
+          border-bottom: none;
+        }
+        h3 {
+          margin: 0;
+          color: #333;
+        }
+        h4 {
+          margin: 5px 0;
+          color: #555;
+        }
+        a {
+          display: inline-block;
+          margin-top: 20px;
+          padding: 10px 15px;
+          text-decoration: none;
+          color: #fff;
+          background-color: #4CAF50;
+          border-radius: 4px;
+          font-size: 16px;
+        }
+        a:hover {
+          background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<h1>Authors List</h1>
+<div class="author-list" th:each="author : ${authors}">
+    <div class="author-item">
+        <h3>[[${author.id}]]. [[${author.name}]]</h3>
+        <h4>Debut Year: [[${author.debutYear}]]</h4>
+        <a th:href="@{/authors/{id}/update (id=${author.id})}">Update</a>
+        <a th:href="@{/authors/{id}/delete (id=${author.id})}">Delete</a>
+        <a th:href="@{/authors/{id} (id=${author.id})}">Read </a>
+
+    </div>
+</div>
+<a href="/authors/create">Back to Create</a>
+</body>
+</html>

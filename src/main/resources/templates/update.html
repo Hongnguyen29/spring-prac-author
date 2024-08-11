@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Author</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      div {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 50px;
+      }
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/authors/home">Back Home</a>
+    <form th:action="@{/authors/{id}/update (id=${author.id})}" method="post">
+      <h1>Update Author</h1>
+      <div>
+        <label for="name-input">Name :</label>
+        <input
+          type="text"
+          name="name"
+          id="name-input"
+          th:value="${author.name}"
+        />
+      </div>
+      <div>
+        <label for="debutYear-input">Debut Year :</label>
+        <input
+          type="text"
+          id="debutYear-input"
+          name="debutYear"
+          th:value="${author.debutYear}"
+        />
+      </div>
+      <input type="submit" value="Update" />
+    </form>
+    <h3>Books:</h3>
+    <main>
+      <div
+        th:unless="${author.books.isEmpty()}"
+        th:each="book : ${author.books}"
+      >
+        <!--
+        <p><strong>Title:</strong> [[${book.title}]]</p>
+        <p><strong>Summary:</strong> [[${book.summary}]]</p>
+        <p><strong>Rating:</strong> [[${book.rating}]]</p>
+        -->
+        <a
+          th:href="@{/authors/{id}/books/{bId}/delete (id=${author.id},bId=${book.id})}"
+          >Delete</a
+        >
+
+        <form
+          style="
+            background-color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 200px;
+          "
+          th:action="@{/authors/{id}/books/{bId}/update (id=${author.id},bId=${book.id} )}"
+          method="post"
+        >
+          <div>
+            <label for="title-input">Title:</label>
+            <input
+              type="text"
+              id="title-input"
+              name="title"
+              th:value="${book.title}"
+            />
+          </div>
+          <div>
+            <label for="summary-input">Summary:</label>
+            <input type="text" id="summary-input" name="summary" />
+          </div>
+          <div>
+            <label for="rating-input">Rating:</label>
+            <input type="number" id="rating-input" name="rating" />
+          </div>
+          <div>
+            <input type="submit" value="Update " />
+          </div>
+        </form>
+
+        <hr />
+      </div>
+    </main>
+  </body>
+</html>
